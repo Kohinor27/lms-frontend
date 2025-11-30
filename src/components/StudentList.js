@@ -5,8 +5,8 @@ function StudentList() {
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/students/")
-        .then((response) => response.json(()
-        .then((data) => setStudents((data);
+        .then((response) => response.json())
+        .then((data) => setStudents(data));
     }, []);
 
 return (
@@ -14,13 +14,13 @@ return (
        <h2>Students</h2>
        <ul>
         {students.map((s) => (
-            <li> key={s.id}>
+            <li key={s.id}>
             <strong>{s.full_name}</strong> - {s.email}
             </li>
         ))}
        </ul>
-       </div>
-);
+    </div>
+ );
 }
 
 export default StudentList;

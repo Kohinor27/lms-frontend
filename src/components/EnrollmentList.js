@@ -5,8 +5,9 @@ function EnrollmentList() {
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/enrollments/")
-        .then((response) => response.json(()
-        .then((data) => setEnrollments(data));
+        .then((response) => response.json())
+        .then((data) => setEnrollments(data))
+        .catch((error) => console.error("Error fetching enrollments:", error));
     }, []);
 
     return (
@@ -14,8 +15,8 @@ function EnrollmentList() {
             <h2>Enrollments</h2>
             <ul>
                 {enrollments.map((e) => (
-                 <li> key={e.id}>
-                   Student ID: {e.student} - Course ID: {e.course} - Date: {e.date_enrolled}
+                 <li key={e.id}>
+                   Student: {enrollments.student_name} - Course: {enrollments.course_name}
                  </li>
                 ))}
             </ul>
