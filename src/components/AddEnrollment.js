@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  TextField,
+  Button,
+  Typography,
+} from "@mui/material";
 
 function AddEnrollment() {
     const [enrollment, setEnrollment] = useState({
@@ -32,21 +39,44 @@ function AddEnrollment() {
     };
 
     return (
-      <div>
-        <h2>Add Enrollment</h2>
-        <form onSubmit={handleSubmit}>
-            <input
-              name="student_id"
-              placeholder="Student ID"
-              onChange={handleChange}
+      <div style={{ padding: "20px" }}>
+        <Typography variant="h4" gutterBottom>
+          Add Enrollment
+        </Typography>
+
+        <Card sx={{ maxWidth: 500, padding: 2 }}>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <TextField
+                label="Student ID"
+                name="student_id"
+                value={enrollment.student_id}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
               />
-            <input
-               name="course_id"
-               placeholder="Course ID"
-               onChange={handleChange}
-               />
-            <button type="submit">Add Enrollment</button>
-        </form>
+
+              <TextField
+                label="Course ID"
+                name="course_id"
+                value={enrollment.course_id}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ marginTop: 2 }}
+              >
+                Add Enrollment
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     );
 }

@@ -1,26 +1,45 @@
 import React, { useEffect, useState } from "react";
+import {
+    Card,
+    CardContent,
+    Typography,
+    CircularProgress
+} from "@mui/material";
 
 function CourseList() {
     const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/courses/")
         .then((response) => response.json())
-        .then((data) => setCourses(data));
+        .then((data) => setCourses(data))
+        .finally(() => setLoading(false));
     }, []);
 
     return (
-     <div>
-        <h2>Courses</h2>
-        <ul>
-            {courses.map((course) => (
-            <li key={course.id}>
-                <strong>{course.title}</strong>: {course.description}
-            </li>
-            ))}
-        </ul>
-     </div>
-    );
+  <div style={{ padding: "20px" }}>
+    <Typography variant="h4" gutterBottom>
+      Course List
+    </Typography>
+
+    {loading ? (
+      <CircularProgress />
+    ) : (
+      courses.map((c) => (
+        <Card key={c.id} style={{ marginBottom: "15px" }}>
+          <CardContent>
+            <Typography variant="h6">{c.name}</Typography>
+            <Typography color="text.secondary">
+              Description: {c.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      ))
+    )}
+  </div>
+);
+
 }
 
 export default CourseList;
