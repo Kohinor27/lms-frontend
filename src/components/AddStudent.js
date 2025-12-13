@@ -9,9 +9,9 @@ import {
 
 function AddStudent() {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    full_name: "",
     email: "",
+    user: 1
   });
 
   const handleChange = (e) => {
@@ -49,18 +49,9 @@ function AddStudent() {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <TextField
-              label="First Name"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-            />
-
-            <TextField
-              label="Last Name"
-              name="last_name"
-              value={formData.last_name}
+              label="Full Name"
+              name="full_name"
+              value={formData.full_name}
               onChange={handleChange}
               fullWidth
               margin="normal"
