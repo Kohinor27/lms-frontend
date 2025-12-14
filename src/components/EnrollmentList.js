@@ -33,10 +33,10 @@ function EnrollmentList() {
         <Card key={e.id} style={{ marginBottom: "15px" }}>
           <CardContent>
             <Typography variant="h6">
-              Student: {e.student_name}
+              Student ID: {e.student}
             </Typography>
             <Typography color="text.secondary">
-              Course: {e.course_name}
+              Course ID: {e.course}
             </Typography>
           </CardContent>
         </Card>

@@ -37,7 +37,7 @@ function App() {
             <Toolbar style={{ gap: "20px" }}>
               <Button color="inherit" component={Link} to="/students">Student List</Button>
               <Button color="inherit" component={Link} to="/add-student">Add Student</Button>
-              <Button color="inherit" component={Link} to="/enrollment">Enrollment List</Button>
+              <Button color="inherit" component={Link} to="/enrollments">Enrollment List</Button>
               <Button color="inherit" component={Link} to="/add-enrollment">Add Enrollment</Button>
               <Button color="inherit" component={Link} to="/courses">Course List</Button>
             </Toolbar>
