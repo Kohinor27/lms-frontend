@@ -11,7 +11,7 @@ function EnrollmentList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/enrollments/")
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`)
         .then((response) => response.json())
 .then((data) => {
     setEnrollments(data);

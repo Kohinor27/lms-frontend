@@ -24,7 +24,7 @@ function AddStudent() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:8000/api/students/", {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/api/students/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

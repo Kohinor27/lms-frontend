@@ -23,7 +23,7 @@ function AddEnrollment() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch("http://127.0.0.1:8000/api/enrollments/", {
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(enrollment),

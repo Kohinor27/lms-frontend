@@ -7,7 +7,7 @@ function StudentList() {
 
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/students/")
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/students/`)
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
@@ -17,7 +17,7 @@ function StudentList() {
 }, []);
 
 return (
-    <div style ={{ padding: "20px" }}>
+    <div style={{ padding: "20px" }}>
         <Typography variant="h4" gutterBottom>
             Student List
         </Typography>
