@@ -8,10 +8,17 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+
   const handleLogin = () => {
     if (!role) return;
+
     login(role);
-    navigate("/");
+
+    if (role === "admin") {
+      navigate("/students");
+    } else {
+    navigate("/courses");
+    }
   };
 
   return (
