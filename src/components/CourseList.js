@@ -3,10 +3,13 @@ import {
     Card,
     CardContent,
     Typography,
-    CircularProgress
+    CircularProgress,
+    Button
 } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function CourseList() {
+    const { user } = useAuth();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -29,11 +32,25 @@ function CourseList() {
       courses.map((c) => (
         <Card key={c.id} style={{ marginBottom: "15px" }}>
           <CardContent>
-            <Typography variant="h6">{c.name}</Typography>
-            <Typography color="text.secondary">
-              Description: {c.description}
-            </Typography>
-          </CardContent>
+  <Typography variant="h6">{c.name}</Typography>
+
+  <Typography color="text.secondary" gutterBottom>
+    Description: {c.description}
+  </Typography>
+
+  {(user?.role === "teacher" || user?.role === "admin") && (
+    <Button>
+      variant="outlined"
+      size="small"
+      sx={{ mt: 1 }}
+      onClick={() => alert("Edit course coming soon")}
+    
+      Edit Course
+    </Button>
+  )}
+</CardContent>
+
+
         </Card>
       ))
     )}
