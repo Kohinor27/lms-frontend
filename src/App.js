@@ -1,39 +1,37 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
+
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-
-import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import Login from "./components/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import RoleRoute from "./components/RoleRoute";
-
-import CourseList from "./components/CourseList";
 import StudentList from "./components/StudentList";
 import AddStudent from "./components/AddStudent";
 import EnrollmentList from "./components/EnrollmentList";
 import AddEnrollment from "./components/AddEnrollment";
+import CourseList from "./components/CourseList";
 
-// ---------------- THEME ----------------
+import ProtectedRoute from "./components/ProtectedRoute";
+import RoleRoute from "./components/RoleRoute";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
 const theme = createTheme({
   palette: {
-    primary: {
-      main: "#4e73df",
-    },
-    secondary: {
-      main: "#1cc88a",
-    },
+    primary: { main: "#4e73df" },
+    secondary: { main: "#1cc88a" },
   },
   shape: {
     borderRadius: 10,
   },
 });
 
-// ---------------- NAV BAR ----------------
 function NavBar() {
   const { user, logout } = useAuth();
 
@@ -41,17 +39,11 @@ function NavBar() {
 
   return (
     <AppBar position="static" color="primary">
-      <Toolbar sx={{ gap: "20px" }}>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          LMS Frontend
-        </Typography>
-
-        {/* Everyone logged in can see courses */}
+      <Toolbar style={{ gap: "20px" }}>
         <Button color="inherit" component={Link} to="/courses">
           Courses
         </Button>
 
-        {/* Admin only */}
         {user.role === "admin" && (
           <>
             <Button color="inherit" component={Link} to="/students">
@@ -77,7 +69,6 @@ function NavBar() {
   );
 }
 
-// ---------------- APP ----------------
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -86,10 +77,10 @@ function App() {
           <NavBar />
 
           <Routes>
-            {/* Login */}
+            {/* PUBLIC */}
             <Route path="/login" element={<Login />} />
 
-            {/* Courses (all logged-in users) */}
+            {/* PROTECTED */}
             <Route
               path="/courses"
               element={
@@ -99,7 +90,6 @@ function App() {
               }
             />
 
-            {/* Admin-only routes */}
             <Route
               path="/students"
               element={
@@ -136,7 +126,7 @@ function App() {
               }
             />
 
-            {/* Default redirect */}
+            {/* DEFAULT */}
             <Route path="*" element={<Login />} />
           </Routes>
         </Router>
@@ -146,4 +136,5 @@ function App() {
 }
 
 export default App;
+
 
