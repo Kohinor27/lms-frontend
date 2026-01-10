@@ -17,8 +17,6 @@ import AddStudent from "./components/AddStudent";
 import EnrollmentList from "./components/EnrollmentList";
 import AddEnrollment from "./components/AddEnrollment";
 import CourseList from "./components/CourseList";
-
-import ProtectedRoute from "./components/ProtectedRoute";
 import RoleRoute from "./components/RoleRoute";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
