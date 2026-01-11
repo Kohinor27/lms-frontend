@@ -55,7 +55,9 @@ function CourseList() {
       (Array.isArray(courses) ? courses : []).map((c) => (
         <Card key={c.id} style={{ marginBottom: "15px" }}>
           <CardContent>
-  <Typography variant="h6">{c.name}</Typography>
+  <Typography variant="h6">
+    {typeof c.name === "string" ? c.name : JSON.stringify(c.name)}
+    </Typography>
 
   <Typography color="text.secondary" gutterBottom>
     Description: {typeof c.description === "string"
