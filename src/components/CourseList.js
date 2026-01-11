@@ -35,7 +35,7 @@ function CourseList() {
   <Typography variant="h6">{c.name}</Typography>
 
   <Typography color="text.secondary" gutterBottom>
-    Description: {c.description}
+    Description: {c.description || "No description"}
   </Typography>
 
   {(user?.role === "teacher" || user?.role === "admin") && (
