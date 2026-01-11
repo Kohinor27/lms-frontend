@@ -11,7 +11,7 @@ function RoleRoute({ allowedRoles, children }) {
 
   // Logged in but wrong role
   if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/login" replace/>;
+    return <Navigate to="/courses" replace/>;
   }
 
   // Correct role
