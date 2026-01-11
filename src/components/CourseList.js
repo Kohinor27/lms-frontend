@@ -16,7 +16,7 @@ function CourseList() {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`)
         .then((response) => response.json())
-        .then((data) => setCourses(data))
+        .then((data) => setCourses(data.results))
         .finally(() => setLoading(false));
     }, []);
 
