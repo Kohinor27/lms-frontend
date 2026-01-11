@@ -11,7 +11,7 @@ function StudentList() {
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
-            setStudents(data);
+            setStudents(Array.isArray(data) ? data :(data.results || []));
             setLoading(false);
         });
 }, []);
@@ -25,7 +25,7 @@ return (
         {loading ? (
             <CircularProgress />
         ) : (
-        students.map((s) => (
+        (Array.isArray(students) ? students : []).map((s) => (
             <Card key={s.id} style={{ marginBottom: "15px" }}>
              <CardContent>
                 <Typography variant="h6">{s.full_name}</Typography>

@@ -14,11 +14,34 @@ function CourseList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`)
-        .then((response) => response.json())
-        .then((data) => setCourses(Array.isArray (data) ? data : (data.results || [])))
-        .finally(() => setLoading(false));
-    }, []);
+  let alive = true;
+
+  const loadCourses = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      console.log("COURSES RAW:", data);
+
+      const list =
+        Array.isArray(data) ? data :
+        Array.isArray(data?.results) ? data.results :
+        [];
+
+      if (alive) setCourses(list);
+    } catch (err) {
+      console.error("COURSES ERROR:", err);
+      if (alive) setCourses([]);
+    } finally {
+      if (alive) setLoading(false);
+    }
+  };
+
+  loadCourses();
+  return () => { alive = false; };
+}, []);
+
 
     return (
   <div style={{ padding: "20px" }}>
@@ -29,7 +52,7 @@ function CourseList() {
     {loading ? (
       <CircularProgress />
     ) : (
-      courses.map((c) => (
+      (Array.isArray(courses) ? courses : []).map((c) => (
         <Card key={c.id} style={{ marginBottom: "15px" }}>
           <CardContent>
   <Typography variant="h6">{c.name}</Typography>
