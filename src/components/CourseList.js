@@ -16,7 +16,7 @@ function CourseList() {
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`)
         .then((response) => response.json())
-        .then((data) => setCourses(data))
+        .then((data) => setCourses(Array.isArray (data) ? data : (data.results || [])))
         .finally(() => setLoading(false));
     }, []);
 
@@ -35,7 +35,9 @@ function CourseList() {
   <Typography variant="h6">{c.name}</Typography>
 
   <Typography color="text.secondary" gutterBottom>
-    Description: {c.description || "No description"}
+    Description: {typeof c.description === "string"
+     ? c.description
+     : "No description"}
   </Typography>
 
   {(user?.role === "teacher" || user?.role === "admin") && (
