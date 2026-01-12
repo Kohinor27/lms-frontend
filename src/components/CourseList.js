@@ -53,7 +53,7 @@ function CourseList() {
       <CircularProgress />
     ) : (
       (Array.isArray(courses) ? courses : []).map((c) => (
-        <Card key={String(c.id ?? JSON.stringify(c))} style={{ marginBottom: "15px" }}>
+        <Card key={c.id} style={{ marginBottom: "15px" }}>
           <CardContent>
   <Typography variant="h6">
     {typeof c.name === "string" ? c.name : JSON.stringify(c.name)}
