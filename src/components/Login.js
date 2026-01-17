@@ -1,62 +1,97 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, TextField } from "@mui/material";
 
 function Login() {
-  const [role, setRole] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const handleLogin = async () => {
+    setError("");
 
-  const handleLogin = () => {
-    if (!role) return;
+    if (!username || !password) {
+      setError("Please enter username and password");
+      return;
+    }
 
-    login(role);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
 
-    if (role === "admin") {
-      navigate("/students");
-    } else {
-    navigate("/courses");
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Login failed");
+        return;
+      }
+
+      // Save token + user into AuthContext
+      login(data);
+
+      // Role-based navigation
+      if (data.groups.includes("Teacher")) {
+        navigate("/courses");
+      } else if (data.groups.includes("Student")) {
+        navigate("/courses");
+      } else {
+        navigate("/students"); // admin
+      }
+
+    } catch (err) {
+      setError("Server error. Please try again.");
     }
   };
 
   return (
-    <Box sx={{ padding: "40px" }}>
+    <Box sx={{ padding: "40px", maxWidth: "400px", margin: "auto" }}>
       <Typography variant="h4" gutterBottom>
         LMS Login
       </Typography>
 
-      <Button
-        variant="contained"
-        sx={{ mr: 2 }}
-        onClick={() => setRole("student")}
-      >
-        Login as Student
-      </Button>
+      <TextField
+        label="Username"
+        fullWidth
+        margin="normal"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
 
-      <Button
-        variant="contained"
-        sx={{ mr: 2 }}
-        onClick={() => setRole("teacher")}
-      >
-        Login as Teacher
-      </Button>
+      <TextField
+        label="Password"
+        type="password"
+        fullWidth
+        margin="normal"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-      <Button
-        variant="contained"
-        onClick={() => setRole("admin")}
-      >
-        Login as Admin
-      </Button>
+      {error && (
+        <Typography color="error" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      )}
 
       <Box sx={{ mt: 3 }}>
         <Button
+          variant="contained"
           color="success"
-          variant="outlined"
+          fullWidth
           onClick={handleLogin}
         >
-          Continue
+          Login
         </Button>
       </Box>
     </Box>
@@ -64,3 +99,4 @@ function Login() {
 }
 
 export default Login;
+

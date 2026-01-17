@@ -66,11 +66,10 @@ function CourseList() {
   </Typography>
 
   {(user?.role === "teacher" || user?.role === "admin") && (
-    <Button>
+    <Button
       variant="outlined"
       size="small"
-      sx={{ mt: 1 }}
-      onClick={() => alert("Edit course coming soon")}
+      onClick={() => alert("Edit course coming soon")}>
     
       Edit Course
     </Button>
