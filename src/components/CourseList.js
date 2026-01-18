@@ -9,16 +9,25 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 function CourseList() {
-    const { user } = useAuth();
+    const { token, isTeacher, isAuthenticated } = useAuth();
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
   let alive = true;
 
   const loadCourses = async () => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`);
+    const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/courses/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
@@ -65,7 +74,7 @@ function CourseList() {
      : "No description"}
   </Typography>
 
-  {(user?.role === "teacher" || user?.role === "admin") && (
+  {isTeacher && (
     <Button
       variant="outlined"
       size="small"
