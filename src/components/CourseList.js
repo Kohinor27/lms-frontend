@@ -13,6 +13,10 @@ function CourseList() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  console.log("TOKEN:", token);
+  console.log("IS TEACHER:", isTeacher);
+  console.log("API BASE URL:", process.env.REACT_APP_API_BASE_URL);
+
   useEffect(() => {
     let alive = true;
 
