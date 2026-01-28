@@ -34,6 +34,7 @@ function NavBar() {
   const { user, logout } = useAuth();
 
   if (!user) return null;
+  console.log(user)
 
   return (
     <AppBar position="static" color="primary">

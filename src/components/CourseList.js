@@ -22,7 +22,6 @@ function CourseList() {
 
     const loadCourses = async () => {
       if (!token) {
-        setLoading(false);
         return;
       }
 

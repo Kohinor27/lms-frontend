@@ -9,9 +9,15 @@ function RoleRoute({ allowedRoles, children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // Logged in but wrong role
-  if (!allowedRoles.includes(user.role)) {
-    return <Navigate to="/courses" replace/>;
+  const userGroups = user.groups?.map(g => g.toLowerCase()) || [];
+  
+  // Logged in but wrong group
+  const hasAccess = allowedRoles?.some(role =>
+    userGroups.includes(role.toLowerCase())
+  );
+
+  if (!hasAccess) {
+    return <Navigate to="/courses" replace />
   }
 
   // Correct role
