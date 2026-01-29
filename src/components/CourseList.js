@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 
+const API_BASE_URL = "http://127.0.0.1:8000";
+
 function CourseList() {
   const { token, isTeacher } = useAuth();
   const [courses, setCourses] = useState([]);
@@ -15,7 +17,7 @@ function CourseList() {
 
   console.log("TOKEN:", token);
   console.log("IS TEACHER:", isTeacher);
-  console.log("API BASE URL:", process.env.REACT_APP_API_BASE_URL);
+
 
   useEffect(() => {
     let alive = true;
@@ -27,10 +29,10 @@ function CourseList() {
 
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/api/courses/`,
+          `${API_BASE_URL}/api/courses/`,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Token ${token}`,
             },
           }
         );
