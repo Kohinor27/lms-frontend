@@ -5,13 +5,19 @@ import {
     Typography,
     CircularProgress,
 } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function EnrollmentList() {
+    const { token } = useAuth();
     const [enrollments, setEnrollments] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`)
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        })
         .then((response) => response.json())
 .then((data) => {
     setEnrollments(data);
