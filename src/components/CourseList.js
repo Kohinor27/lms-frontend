@@ -22,7 +22,7 @@ function CourseList() {
   useEffect(() => {
     let alive = true;
 
-    const loadCourses = async () => {
+    const loadCourses = async () => { 
       if (!token) {
         return;
       }
@@ -33,7 +33,7 @@ function CourseList() {
           {
             headers: {
               Authorization: `Token ${token}`,
-            },
+            }, 
           }
         );
 

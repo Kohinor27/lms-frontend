@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography, CircularProgress } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function StudentList() {
+    const { token } = useAuth();
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/students/`)
+        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/students/`, {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+        })
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
