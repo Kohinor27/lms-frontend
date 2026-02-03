@@ -8,23 +8,34 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 function EnrollmentList() {
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const [enrollments, setEnrollments] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`, {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        })
-        .then((response) => response.json())
-.then((data) => {
-    setEnrollments(data);
-    setLoading(false);
-})
-        .catch((error) => console.error("Error fetching enrollments:", error));
-    }, []);
+  let url = `${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`;
+
+  // If NOT admin, only fetch this student's enrollments
+  if (!user.groups?.includes("admin")) {
+    url = `${process.env.REACT_APP_API_BASE_URL}/api/enrollments/?student=${user.id}`;
+  }
+
+  fetch(url, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setEnrollments(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching enrollments:", error);
+      setLoading(false);
+    });
+}, [user, token]);
+
 
     return (
   <div style={{ padding: "20px" }}>
