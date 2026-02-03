@@ -6,8 +6,10 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function AddStudent() {
+  const { token } = useAuth();
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -26,7 +28,9 @@ function AddStudent() {
 
     fetch(`${process.env.REACT_APP_API_BASE_URL}/api/students/`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+       },
       body: JSON.stringify(formData),
     })
       .then((response) => {

@@ -43,7 +43,7 @@ function NavBar() {
           Courses
         </Button>
 
-        {user.role === "admin" && (
+        {user.groups?.includes("admin") && (
           <>
             <Button color="inherit" component={Link} to="/students">
               Students

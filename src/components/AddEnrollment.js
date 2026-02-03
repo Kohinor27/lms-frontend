@@ -6,8 +6,10 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 function AddEnrollment() {
+    const { token } = useAuth();
     const [enrollment, setEnrollment] = useState({
         student_id: "",
         course_id: "",
@@ -25,7 +27,9 @@ function AddEnrollment() {
 
         fetch(`${process.env.REACT_APP_API_BASE_URL}/api/enrollments/`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+             },
             body: JSON.stringify(enrollment),
         })
             .then((response) => {
