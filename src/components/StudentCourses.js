@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function StudentCourses() {
-  const [enrolments, setEnrolments] = useState([]);
+  const [enrollments, setEnrollments] = useState([]);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -11,17 +11,17 @@ function StudentCourses() {
       },
     })
       .then(res => res.json())
-      .then(data => setEnrolments(data));
+      .then(data => setEnrollments(data));
   }, []);
 
   return (
     <div>
       <h2>My Courses</h2>
 
-      {enrolments.map(enrolment => (
-        <div key={enrolment.id}>
-          <p>{enrolment.course.title}</p>
-          <p>{enrolment.course.description}</p>
+      {enrollments.map(enrollment => (
+        <div key={enrollment.id}>
+          <p>{enrollment.course.title}</p>
+          <p>{enrollment.course.description}</p>
         </div>
       ))}
     </div>

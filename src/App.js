@@ -19,6 +19,7 @@ import AddEnrollment from "./components/AddEnrollment";
 import CourseList from "./components/CourseList";
 import RoleRoute from "./components/RoleRoute";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import StudentCourses from "./components/StudentCourses"
 
 const theme = createTheme({
   palette: {
@@ -85,6 +86,15 @@ function App() {
               element={
                 <RoleRoute allowedRoles={["student", "teacher", "admin"]}>
                   <CourseList />
+                </RoleRoute>
+              }
+            />
+
+            <Route
+              path="/my-courses"
+              element={
+                <RoleRoute allowedRoles={["Student"]}>
+                  <StudentCourses />
                 </RoleRoute>
               }
             />
