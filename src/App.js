@@ -39,34 +39,47 @@ function NavBar() {
 
   return (
     <AppBar position="static" color="primary">
-      <Toolbar style={{ gap: "20px" }}>
-        <Button color="inherit" component={Link} to="/courses">
-          Courses
-        </Button>
+  <Toolbar style={{ gap: "20px" }}>
 
-        {user.groups?.includes("admin") && (
-          <>
-            <Button color="inherit" component={Link} to="/students">
-              Students
-            </Button>
-            <Button color="inherit" component={Link} to="/add-student">
-              Add Student
-            </Button>
-            <Button color="inherit" component={Link} to="/enrollments">
-              Enrollments
-            </Button>
-            <Button color="inherit" component={Link} to="/add-enrollment">
-              Add Enrollment
-            </Button>
-          </>
-        )}
+    {/* STUDENT */}
+    {user.groups?.includes("student") && (
+      <Button color="inherit" component={Link} to="/my-courses">
+        My Courses
+      </Button>
+    )}
 
-        <Button color="inherit" onClick={logout}>
-          Logout
+    {/* TEACHER + ADMIN */}
+    {(user.groups?.includes("teacher") || user.groups?.includes("admin")) && (
+      <Button color="inherit" component={Link} to="/courses">
+        Courses
+      </Button>
+    )}
+
+    {/* ADMIN ONLY */}
+    {user.groups?.includes("admin") && (
+      <>
+        <Button color="inherit" component={Link} to="/students">
+          Students
         </Button>
-      </Toolbar>
-    </AppBar>
-  );
+        <Button color="inherit" component={Link} to="/add-student">
+          Add Student
+        </Button>
+        <Button color="inherit" component={Link} to="/enrollments">
+          Enrollments
+        </Button>
+        <Button color="inherit" component={Link} to="/add-enrollment">
+          Add Enrollment
+        </Button>
+      </>
+    )}
+
+    <Button color="inherit" onClick={logout}>
+      Logout
+    </Button>
+
+    </Toolbar>
+  </AppBar>
+    );
 }
 
 function App() {
@@ -84,7 +97,7 @@ function App() {
             <Route
               path="/courses"
               element={
-                <RoleRoute allowedRoles={["student", "teacher", "admin"]}>
+                <RoleRoute allowedRoles={[ "teacher", "admin"]}>
                   <CourseList />
                 </RoleRoute>
               }
@@ -93,7 +106,7 @@ function App() {
             <Route
               path="/my-courses"
               element={
-                <RoleRoute allowedRoles={["Student"]}>
+                <RoleRoute allowedRoles={["student"]}>
                   <StudentCourses />
                 </RoleRoute>
               }

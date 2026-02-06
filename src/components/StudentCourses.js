@@ -15,17 +15,30 @@ function StudentCourses() {
   }, []);
 
   return (
-    <div>
-      <h2>My Courses</h2>
+  <div style={{ padding: "24px" }}>
+    <h2>My Courses</h2>
 
-      {enrollments.map(enrollment => (
-        <div key={enrollment.id}>
-          <p>{enrollment.course.title}</p>
+    {enrollments.length === 0 ? (
+      <p>You are not enrolled in any courses yet.</p>
+    ) : (
+      enrollments.map((enrollment) => (
+        <div
+          key={enrollment.id}
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: "8px",
+            padding: "16px",
+            marginBottom: "12px",
+          }}
+        >
+          <h3>{enrollment.course.title}</h3>
           <p>{enrollment.course.description}</p>
         </div>
-      ))}
-    </div>
-  );
+      ))
+    )}
+  </div>
+);
+
 }
 
 export default StudentCourses;

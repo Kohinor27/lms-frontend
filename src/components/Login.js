@@ -42,9 +42,9 @@ function Login() {
       login(data);
 
       // Role-based navigation
-      if (data.groups.includes("Teacher")) {
-        navigate("/courses");
-      } else if (data.groups.includes("Student")) {
+      if (data.groups.includes("student")) {
+        navigate("/my-courses");
+      } else if (data.groups.includes("Teacher")) {
         navigate("/courses");
       } else {
         navigate("/students"); // admin
