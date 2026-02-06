@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 function StudentCourses() {
   const [enrollments, setEnrollments] = useState([]);
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/enrollments/", {
@@ -11,8 +12,18 @@ function StudentCourses() {
       },
     })
       .then(res => res.json())
-      .then(data => setEnrollments(data));
+      .then(data => setEnrollments(data))
+      .catch(() => setLoading(false))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return(
+      <div style={{ padding: "24px" }}>
+        <p>Loading your courses...</p>
+      </div>
+    );
+  }
 
   return (
   <div style={{ padding: "24px" }}>
