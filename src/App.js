@@ -19,7 +19,8 @@ import AddEnrollment from "./components/AddEnrollment";
 import CourseList from "./components/CourseList";
 import RoleRoute from "./components/RoleRoute";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import StudentCourses from "./components/StudentCourses"
+import StudentCourses from "./components/StudentCourses";
+import AddCourse from "./components/AddCourse";
 
 const theme = createTheme({
   palette: {
@@ -50,9 +51,15 @@ function NavBar() {
 
     {/* TEACHER + ADMIN */}
     {(user.groups?.includes("teacher") || user.groups?.includes("admin")) && (
+      <>
       <Button color="inherit" component={Link} to="/courses">
         Courses
       </Button>
+
+      <Button color="inherit" component={Link} to="/add-course">
+        Add Course
+      </Button>
+      </>
     )}
 
     {/* ADMIN ONLY */}
@@ -102,6 +109,15 @@ function App() {
                 </RoleRoute>
               }
             />
+
+            <Route
+              path="/add-course"
+              element={
+                <RoleRoute allowedRoles={["teacher", "admin"]}>
+                  <AddCourse />
+                </RoleRoute>
+              }
+              />
 
             <Route
               path="/my-courses"
